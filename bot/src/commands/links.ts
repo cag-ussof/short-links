@@ -10,6 +10,7 @@ import {
   Row,
 } from "@buape/carbon";
 import { sendToInternalLogs, type Env } from "../index";
+import urlRegexSafe from "url-regex-safe";
 
 type ShortLink = {
   redirect_url: string;
@@ -96,17 +97,10 @@ class CreateLink extends Command {
       return interaction.reply({ content: "Missing required options" });
     }
 
-    const urlRegex = new RegExp("^https?://[^s]+$", "i");
-    if (!urlRegex.test(url)) {
+    const isValidLink = urlRegexSafe().test(url);
+    if (!isValidLink) {
       return interaction.reply({
         content: "Invalid URL. Please provide a valid URL",
-      });
-    }
-
-    const slugRegex = new RegExp("^[a-z0-9-]+$", "i");
-    if (!slugRegex.test(slug)) {
-      return interaction.reply({
-        content: "Invalid slug. Please provide a valid slug",
       });
     }
 
