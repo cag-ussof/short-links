@@ -18,7 +18,7 @@ type ShortLink = {
 	hits: number;
 };
 
-const mainDomain = "go.cag-ussof.org";
+const domain1 = "go.cag-ussof.org";
 
 const handleShortLinkAutocomplete = async (
 	interaction: AutocompleteInteraction,
@@ -59,12 +59,12 @@ class CreateLink extends Command {
 			name: "domain",
 			type: ApplicationCommandOptionType.String,
 			description:
-				"The domain this short-link should be created on (e.g. 'go.xanderxx.xyz')",
+				"The domain this short-link should be created on (e.g. 'go.cag-ussof.org')",
 			required: true,
 			choices: [
 				{
-					name: mainDomain,
-					value: mainDomain,
+					name: domain1,
+					value: domain1,
 				},
 			],
 		},
@@ -135,12 +135,12 @@ class DeleteLink extends Command {
 			name: "domain",
 			type: ApplicationCommandOptionType.String,
 			description:
-				"The domain this short-link should be deleted from (e.g. 'go.xanderxx.xyz')",
+				"The domain this short-link should be deleted from (e.g. 'go.cag-ussof.org')",
 			required: true,
 			choices: [
 				{
-					name: mainDomain,
-					value: mainDomain,
+					name: domain1,
+					value: domain1,
 				},
 			],
 		},
@@ -148,7 +148,7 @@ class DeleteLink extends Command {
 			name: "link",
 			type: ApplicationCommandOptionType.String,
 			description:
-				"The link to be deleted (e.g. `cag (https://cag-ussof.org)`)",
+				"The link to be deleted (e.g. `discord (https://discord.gg/8srzuP97Rb)`)",
 			required: true,
 			autocomplete: true,
 		},
@@ -199,18 +199,18 @@ class StatsLink extends Command {
 	}
 
 	name = "stats";
-	description = "Get stats of a short-link via Buape Link";
+	description = "Get stats of a short-link";
 	options: APIApplicationCommandBasicOption[] = [
 		{
 			name: "domain",
 			type: ApplicationCommandOptionType.String,
 			description:
-				"The domain this short-link is served from (e.g. 'go.xanderxx.xyz')",
+				"The domain this short-link is served from (e.g. 'go.cag-ussof.org')",
 			required: true,
 			choices: [
 				{
-					name: mainDomain,
-					value: mainDomain,
+					name: domain1,
+					value: domain1,
 				},
 			],
 		},
@@ -218,7 +218,7 @@ class StatsLink extends Command {
 			name: "link",
 			type: ApplicationCommandOptionType.String,
 			description:
-				"The link to get stats on (e.g. `kiai-docs (https://docs.kiai.app)`)",
+				"The link to get stats on (e.g. `discord (https://discord.gg/8srzuP97Rb)`)",
 			required: true,
 			autocomplete: true,
 		},
@@ -244,7 +244,7 @@ class StatsLink extends Command {
 		const parsedValue = JSON.parse(url) as ShortLink;
 
 		return interaction.reply({
-			content: `Stats for short-link: \`https://${domain}/${link}\`\n\n**Link**: \`${parsedValue.redirect_url}\`\n**Total Hits**: ${parsedValue.hits}`,
+			content: `Stats for short-link: \`https://${domain}/${link}\`\n\n**Link**: \`${parsedValue.redirect_url}\`\n**Total Uses**: ${parsedValue.hits}`,
 		});
 	}
 
