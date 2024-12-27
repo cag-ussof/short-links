@@ -66,7 +66,7 @@ class CreateLink extends Command {
       choices: [
         {
           name: "go.buape.com",
-          value: "go-new.buape.com",
+          value: "go.buape.com",
         },
         {
           name: "go.kiai.app",
@@ -146,7 +146,7 @@ class DeleteLink extends Command {
       choices: [
         {
           name: "go.buape.com",
-          value: "go-new.buape.com",
+          value: "go.buape.com",
         },
         {
           name: "go.kiai.app",
@@ -220,7 +220,7 @@ class StatsLink extends Command {
       choices: [
         {
           name: "go.buape.com",
-          value: "go-new.buape.com",
+          value: "go.buape.com",
         },
         {
           name: "go.kiai.app",
