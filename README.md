@@ -1,2 +1,2 @@
-# Short Links
- 🔗 Short links service made originally by [Buape Studios](https://github.com/buape/short-links)
+# BuapeShortLinks
+ 🔗 Short links service made by [Buape Studios](https://buape.com)
