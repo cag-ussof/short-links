@@ -5,3 +5,5 @@ build/
 .wrangler/
 node_modules/
 .env
+
+wrangler.toml
