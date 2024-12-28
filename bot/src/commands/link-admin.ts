@@ -6,9 +6,6 @@ import {
 	type CommandInteraction,
 	type CommandOptions,
 	CommandWithSubcommands,
-	Embed,
-	LinkButton,
-	Row,
 } from "@buape/carbon";
 import { sendToInternalLogs, type Env } from "../index";
 import urlRegexSafe from "url-regex-safe";
@@ -253,110 +250,110 @@ class StatsLink extends Command {
 	}
 }
 
-class ListLinks extends Command {
-	private env: Env;
+// class ListLinks extends Command {
+// 	private env: Env;
 
-	constructor(env: Env) {
-		super();
-		this.env = env;
-	}
+// 	constructor(env: Env) {
+// 		super();
+// 		this.env = env;
+// 	}
 
-	name = "list";
-	description = "List all short-links";
+// 	name = "list";
+// 	description = "List all short-links";
 
-	async run(interaction: CommandInteraction) {
-		const links = await this.env.SHORT_LINKS.list();
+// 	async run(interaction: CommandInteraction) {
+// 		const links = await this.env.SHORT_LINKS.list();
 
-		const footer = links.keys.length;
+// 		const footer = links.keys.length;
 
-		if (!links.keys.length) {
-			return interaction.reply({
-				content: "No short-links found",
-			});
-		}
+// 		if (!links.keys.length) {
+// 			return interaction.reply({
+// 				content: "No short-links found",
+// 			});
+// 		}
 
-		const shortLinks: Record<
-			string,
-			Array<{ slug: string; link: ShortLink }>
-		> = {};
+// 		const shortLinks: Record<
+// 			string,
+// 			Array<{ slug: string; link: ShortLink }>
+// 		> = {};
 
-		for (const key of links.keys) {
-			if (!key.name.includes(":")) {
-				console.warn(`Skipping invalid key format: ${key.name}`);
-				continue;
-			}
+// 		for (const key of links.keys) {
+// 			if (!key.name.includes(":")) {
+// 				console.warn(`Skipping invalid key format: ${key.name}`);
+// 				continue;
+// 			}
 
-			const [domain, slug] = key.name.split(":");
+// 			const [domain, slug] = key.name.split(":");
 
-			if (!domain || !slug) {
-				console.warn(`Skipping invalid key format: ${key.name}`);
-				continue;
-			}
+// 			if (!domain || !slug) {
+// 				console.warn(`Skipping invalid key format: ${key.name}`);
+// 				continue;
+// 			}
 
-			const value = await this.env.SHORT_LINKS.get(key.name);
-			if (!value) {
-				console.warn(`No value found for key: ${key.name}`);
-				continue;
-			}
+// 			const value = await this.env.SHORT_LINKS.get(key.name);
+// 			if (!value) {
+// 				console.warn(`No value found for key: ${key.name}`);
+// 				continue;
+// 			}
 
-			let parsedValue: ShortLink;
-			try {
-				parsedValue = JSON.parse(value) as ShortLink;
-				if (!parsedValue.redirect_url || typeof parsedValue.hits !== "number") {
-					console.warn(`Invalid value format for key: ${key.name}`);
-					continue;
-				}
-			} catch (error) {
-				console.error(`Error parsing value for key ${key.name}:`, error);
-				continue;
-			}
+// 			let parsedValue: ShortLink;
+// 			try {
+// 				parsedValue = JSON.parse(value) as ShortLink;
+// 				if (!parsedValue.redirect_url || typeof parsedValue.hits !== "number") {
+// 					console.warn(`Invalid value format for key: ${key.name}`);
+// 					continue;
+// 				}
+// 			} catch (error) {
+// 				console.error(`Error parsing value for key ${key.name}:`, error);
+// 				continue;
+// 			}
 
-			if (!shortLinks[domain]) {
-				shortLinks[domain] = [];
-			}
+// 			if (!shortLinks[domain]) {
+// 				shortLinks[domain] = [];
+// 			}
 
-			shortLinks[domain].push({
-				slug,
-				link: parsedValue,
-			});
-		}
+// 			shortLinks[domain].push({
+// 				slug,
+// 				link: parsedValue,
+// 			});
+// 		}
 
-		let content = "";
-		let title = "";
+// 		let content = "";
+// 		let title = "";
 
-		for (const [domain, links] of Object.entries(shortLinks)) {
-			title += `${domain}`;
-			for (const { slug, link } of links) {
-				content += `**Link:** https://${domain}/${slug}\n **Target:** ${link.redirect_url} (Uses: ${link.hits})\n\n`;
-			}
-			content += "\n";
-		}
+// 		for (const [domain, links] of Object.entries(shortLinks)) {
+// 			title += `${domain}`;
+// 			for (const { slug, link } of links) {
+// 				content += `**Link:** https://${domain}/${slug}\n **Target:** ${link.redirect_url} (Uses: ${link.hits})\n\n`;
+// 			}
+// 			content += "\n";
+// 		}
 
-		const mainEmbed = new MainEmbed(title, content, `${footer} Link(s)`);
+// 		const mainEmbed = new MainEmbed(title, content, `${footer} Link(s)`);
 
-		return interaction.reply({
-			embeds: [mainEmbed],
-		});
-	}
-}
+// 		return interaction.reply({
+// 			embeds: [mainEmbed],
+// 		});
+// 	}
+// }
 
-let mainEmbed: Embed;
+// let mainEmbed: Embed;
 
-class MainEmbed extends Embed {
-	constructor(title: string, description: string, footerText: string) {
-		super({});
-		this.description = description;
-		this.title = title;
-		this.color = 0x454b1b;
-		this.footer = {
-			text: footerText,
-		};
-	}
-}
+// class MainEmbed extends Embed {
+// 	constructor(title: string, description: string, footerText: string) {
+// 		super({});
+// 		this.description = description;
+// 		this.title = title;
+// 		this.color = 0x454b1b;
+// 		this.footer = {
+// 			text: footerText,
+// 		};
+// 	}
+// }
 
 export default class LinksRootCommand extends CommandWithSubcommands {
 	private env: Env;
-	name = "links";
+	name = "link-admin";
 	description = "Short-link root command";
 	defer = true;
 	subcommands: Command[];
@@ -368,7 +365,6 @@ export default class LinksRootCommand extends CommandWithSubcommands {
 			new CreateLink(this.env),
 			new DeleteLink(this.env),
 			new StatsLink(this.env),
-			new ListLinks(this.env),
 		];
 	}
 }

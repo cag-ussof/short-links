@@ -3,17 +3,18 @@ import { Client, createHandle } from "@buape/carbon";
 import { createHandler } from "@buape/carbon/adapters/cloudflare";
 import type { KVNamespace } from "@cloudflare/workers-types";
 import PingCommand from "./commands/ping";
-import LinksRootCommand from "./commands/links";
+import LinksRootCommand from "./commands/link-admin";
+import ListLinks from "./commands/list-links";
 
 export type Env = {
-		DISCORD_CLIENT_ID: string;
-		DISCORD_PUBLIC_KEY: string;
-		DISCORD_BOT_TOKEN: string;
-		DEPLOY_SECRET: string;
-		SHORT_LINKS: KVNamespace;
-		ACCESS_KEY: string;
-		INTERNAL_LOGS_WEBHOOK: string;
-	};
+	DISCORD_CLIENT_ID: string;
+	DISCORD_PUBLIC_KEY: string;
+	DISCORD_BOT_TOKEN: string;
+	DEPLOY_SECRET: string;
+	SHORT_LINKS: KVNamespace;
+	ACCESS_KEY: string;
+	INTERNAL_LOGS_WEBHOOK: string;
+};
 
 const handle = createHandle((env) => {
 	const client = new Client(
@@ -24,7 +25,11 @@ const handle = createHandle((env) => {
 			publicKey: String(env.DISCORD_PUBLIC_KEY),
 			token: String(env.DISCORD_BOT_TOKEN),
 		},
-		[new LinksRootCommand(env as unknown as Env), new PingCommand()],
+		[
+			new LinksRootCommand(env as unknown as Env),
+			new PingCommand(),
+			new ListLinks(env as unknown as Env),
+		],
 	);
 	return [client];
 });

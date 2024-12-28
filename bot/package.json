@@ -2,7 +2,7 @@
 	"name": "cag-go-bot",
 	"module": "src/index.ts",
 	"scripts": {
-		"build": "wrangler deploy",
+		"deploy": "wrangler deploy",
 		"tail": "wrangler tail",
 		"dev": "wrangler dev && wrangler tail"
 	},
@@ -18,6 +18,6 @@
 		"@buape/carbon": "^0.0.0-beta-20241027215537",
 		"@types/url-regex-safe": "^1.0.2",
 		"url-regex-safe": "^4.0.0",
-		"wrangler": "^3.74.0"
+		"wrangler": "^3.99.0"
 	}
 }
