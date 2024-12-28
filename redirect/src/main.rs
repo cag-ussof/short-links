@@ -208,7 +208,7 @@ async fn handle_redirect(host: &str, path: &str, env: &Env) -> Result<Response> 
             }
         }
 
-        Response::error("Short link not found", 404)
+        Response::error("Short link not found. Please contact @xander on discord to ask why.", 404)
     }
 }
 
