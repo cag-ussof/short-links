@@ -34,8 +34,6 @@ export default class ListLinks extends Command {
 	async run(interaction: CommandInteraction) {
 		const links = await this.env.SHORT_LINKS.list();
 
-		const footer = links.keys.length;
-
 		if (!links.keys.length) {
 			return interaction.reply({
 				content: "No short-links found",
@@ -90,6 +88,7 @@ export default class ListLinks extends Command {
 
 		let content = "";
 		let title = "";
+		const footer = links.keys.length;
 
 		for (const [domain, links] of Object.entries(shortLinks)) {
 			title += `${domain}`;
